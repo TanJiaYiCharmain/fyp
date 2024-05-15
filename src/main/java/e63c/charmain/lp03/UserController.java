@@ -8,15 +8,15 @@ public class UserController {
 
     @GetMapping("/user")
     public String getUserPage() {
-        return "user_data"; // This corresponds to user_data.html
+        return "user_data"; 
     }
     @GetMapping("/design")
     public String getDesignPage() {
-        return "design"; // This corresponds to user_data.html
+        return "design"; 
     }
     @GetMapping("/login")
     public String loginPage() {
-        return "login"; // This corresponds to user_data.html
+        return "index"; 
     }
     
    
