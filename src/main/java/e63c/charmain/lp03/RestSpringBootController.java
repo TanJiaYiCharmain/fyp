@@ -13,9 +13,13 @@
 
 package e63c.charmain.lp03;
 
-import java.util.Arrays;
+import java.util.Arrays; 
 import java.util.List;
-
+import java.util.Map;
+import java.util.TreeMap;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,5 +52,26 @@ public class RestSpringBootController {
 		RestTemplate restTemplate = new RestTemplate();
 		Object[] design = restTemplate.getForObject(url, Object[].class);
 		return Arrays.asList(design);
+	}
+	
+	@GetMapping("/designData")
+	public ModelAndView getPieChart(Model model) {
+	    // Call the /api/design endpoint to fetch the design data
+	    List<Object> designData = getDesign();
+	    
+	    // Process the design data to generate graph data
+	    Map<String, Integer> graphData = new TreeMap<>();
+	    for (Object design : designData) {
+	        String theme = ((Map<String, String>) design).get("Theme"); // Get the theme from the design object
+	        graphData.put(theme, graphData.getOrDefault(theme, 0) + 1); // Increment count for the theme
+	    }
+	    
+	    // Add the graph data to the model
+	    model.addAttribute("chartData", graphData);
+	    
+	    // Return ModelAndView with view name and model
+	    ModelAndView modelAndView = new ModelAndView("statistics");
+	    modelAndView.addObject("chartData", graphData);
+	    return modelAndView;
 	}
 }
