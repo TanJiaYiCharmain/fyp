@@ -9,9 +9,10 @@
 <style>
 /* Styling for the user data table */
 .user-table {
-	width: 100%;
+	width: 60%;
 	border-collapse: collapse;
 	margin-top: 20px;
+	margin-left:20%;
 }
 
 .user-table th, .user-table td {
@@ -109,7 +110,7 @@ header {
 					</li>
 					<li class="nav-item"><a class="nav-link" href="/user">Users</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
+					
 				</ul>
 				<!-- Links -->
 			</div>
@@ -117,42 +118,45 @@ header {
 		</div>
 	</nav>
 	<!-- Navbar -->
-	<h1 style="text-align:center;padding: 10px;">User Data</h1>
+	<h1 style="text-align:center;padding: 10px;margin-top:20px">User Data</h1>
 	<div style="height:700px; padding: 30px;"id="user-list"></div>
 	<div th:replace="fragments/footer"></div>
 	<script>
-        fetch('/api/user')
-            .then(response => response.json())
-            .then(users => {
-                const userListDiv = document.getElementById('user-list');
+	fetch('/api/user')
+    .then(response => response.json())
+    .then(users => {
+        const userListDiv = document.getElementById('user-list');
 
-                const table = document.createElement('table');
-                table.classList.add('user-table');
+        const table = document.createElement('table');
+        table.classList.add('user-table');
 
-                const headers = ['ID', 'Username', 'Email'];
-                const headerRow = document.createElement('tr');
-                headers.forEach(headerText => {
-                    const th = document.createElement('th');
-                    th.textContent = headerText;
-                    headerRow.appendChild(th);
-                });
-                table.appendChild(headerRow);
+        const headers = ['Username', 'Email'];
+        const headerRow = document.createElement('tr');
+        headers.forEach(headerText => {
+            const th = document.createElement('th');
+            th.textContent = headerText;
+            headerRow.appendChild(th);
+        });
+        table.appendChild(headerRow);
 
-                users.forEach(user => {
-                    const row = document.createElement('tr');
-                    ['id', 'username', 'email'].forEach(key => {
-                        const cell = document.createElement('td');
-                        cell.textContent = user[key];
-                        row.appendChild(cell);
-                    });
-                    table.appendChild(row);
-                });
+        // Filter out users with the role "Users"
+        const filteredUsers = users.filter(user => user.roles === 'Users');
 
-                userListDiv.appendChild(table);
-            })
-            .catch(error => {
-                console.error('Error fetching user data:', error);
+        filteredUsers.forEach(user => {
+            const row = document.createElement('tr');
+            ['username', 'email'].forEach(key => {
+                const cell = document.createElement('td');
+                cell.textContent = user[key];
+                row.appendChild(cell);
             });
+            table.appendChild(row);
+        });
+
+        userListDiv.appendChild(table);
+    })
+    .catch(error => {
+        console.error('Error fetching user data:', error);
+    });
     </script>
 </body>
 </html>

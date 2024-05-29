@@ -155,18 +155,13 @@ header {
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-
-   
-
     <!-- Collapse button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
     <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
       <!-- Links -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
@@ -178,21 +173,12 @@ header {
         <li class="nav-item">
           <a class="nav-link" href="/user">Users</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
       </ul>
-      <!-- Links -->
-
-      
-
     </div>
     <!-- Collapsible content -->
-
   </div>
 </nav>
 <!-- Navbar -->
-
 <div class="content">
   <div class="contain">
     <div class="search-container">
@@ -200,16 +186,13 @@ header {
         placeholder="Search by theme...">
       <button id="searchButton" class="search-button">Search</button>
     </div>
-
     <div id="searchInfo">
       <p style="font-size: 30px;">
         Searched: <b><span id="searchInputValue"></span></b>
       </p>
     </div>
-
-    <div id="generated-list" class="design-container"></div>
+    <div id="generated-list"></div>
   </div>
-  
 </div>
 <div th:replace="fragments/footer"></div>
 
@@ -230,70 +213,82 @@ function toggleDescription(element) {
   }
 }
 
-// Fetch previously generated themes from localStorage or initialize an empty array
-let generatedThemes = JSON.parse(localStorage.getItem('generatedThemes')) || [];
-
+// Function to handle search...
+  
 fetch('/api/design')
   .then(response => response.json())
   .then(designs => {
-    // Store fetched designs in localStorage
-    localStorage.setItem('designs', JSON.stringify(designs));
+    // Group designs by number of rooms
+    const groupedDesigns = {};
+    designs.forEach(design => {
+      const numRooms = design.num_room;
+      if (!groupedDesigns[numRooms]) {
+        groupedDesigns[numRooms] = [];
+      }
+      groupedDesigns[numRooms].push(design);
+    });
 
     const designListDiv = document.getElementById('generated-list');
 
-    designs.forEach(design => {
-      const designCard = document.createElement('div');
-      designCard.classList.add('design-card');
+    // Populate containers for each group
+    for (const numRooms in groupedDesigns) {
+      if (groupedDesigns.hasOwnProperty(numRooms)) {
+        const designContainer = document.createElement('div');
+        designContainer.classList.add('design-container');
+        designContainer.setAttribute('data-num-rooms', numRooms);
+		
+     // Create label for number of rooms
+        const roomLabel = document.createElement('h4'); // You can use h2, h3, or any other appropriate heading element
+        roomLabel.textContent = `Number of Rooms: ${numRooms}`;
+       designListDiv.appendChild(roomLabel);
+        
+        groupedDesigns[numRooms].forEach(design => {
+          const designCard = document.createElement('div');
+          designCard.classList.add('design-card');
 
-      // Image
-      const designImage = document.createElement('img');
-      designImage.classList.add('design-image');
-      designImage.src = design.image;
-      designImage.alt = 'Design Image';
-      designCard.appendChild(designImage);
+          // Image
+          const designImage = document.createElement('img');
+          designImage.classList.add('design-image');
+          designImage.src = design.image;
+          designImage.alt = 'Design Image';
+          designCard.appendChild(designImage);
 
-      // Details
-      const designDetails = document.createElement('div');
-      designDetails.classList.add('design-details');
+          // Details
+          const designDetails = document.createElement('div');
+          designDetails.classList.add('design-details');
 
-      // Title
-      const designTitle = document.createElement('div');
-      designTitle.classList.add('design-title');
-      designTitle.textContent = 'Design Title: ' + design.custom_theme;
-      designDetails.appendChild(designTitle);
-      
-  // Number of Room
-      const designRoom = document.createElement('div');
-      designRoom.classList.add('design-NoRoom');
-      designRoom.textContent = 'Number of Room: ' + design.num_room;
-      designDetails.appendChild(designRoom); 
+          // Title
+          const designTitle = document.createElement('div');
+          designTitle.classList.add('design-title');
+          designTitle.textContent = 'Design Title: ' + design.custom_theme;
+          designDetails.appendChild(designTitle);
+          
+          // Number of Room
+          const designRoom = document.createElement('div');
+          designRoom.classList.add('design-NoRoom');
+          designRoom.textContent = 'Number of Room: ' + design.num_room;
+          designDetails.appendChild(designRoom); 
 
-      // Description
-      const designDescription = document.createElement('div');
-      designDescription.classList.add('design-description');
-      designDescription.textContent = 'Design Description: ' + design.prompt;
-      designDetails.appendChild(designDescription);
+          // Description
+          const designDescription = document.createElement('div');
+          designDescription.classList.add('design-description');
+          designDescription.textContent = 'Design Description: ' + design.prompt;
+          designDetails.appendChild(designDescription);
 
-      // Show more/less link
-      const showMoreLink = document.createElement('span');
-      showMoreLink.classList.add('show-more');
-      showMoreLink.textContent = 'more...';
-      showMoreLink.addEventListener('click', () => toggleDescription(showMoreLink));
-      designDetails.appendChild(showMoreLink);
+          // Show more/less link
+          const showMoreLink = document.createElement('span');
+          showMoreLink.classList.add('show-more');
+          showMoreLink.textContent = 'more...';
+          showMoreLink.addEventListener('click', () => toggleDescription(showMoreLink));
+          designDetails.appendChild(showMoreLink);
 
-      designCard.appendChild(designDetails);
-      designListDiv.appendChild(designCard);
+          designCard.appendChild(designDetails);
+          designContainer.appendChild(designCard);
+        });
 
-      // Add the generated theme to the array
-      generatedThemes.push(design.Theme);
-    });
-
-    // Store updated generatedThemes in localStorage
-    localStorage.setItem('generatedThemes', JSON.stringify(generatedThemes));
-
-    // Count the occurrences of each theme
-    const themeCounts = countThemes(generatedThemes);
-    console.log(themeCounts); // Display theme counts
+        designListDiv.appendChild(designContainer);
+      }
+    }
   })
   .catch(error => {
     console.error('Error fetching Design data:', error);

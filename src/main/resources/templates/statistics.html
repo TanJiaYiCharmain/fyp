@@ -110,7 +110,7 @@ header {
 					</li>
 					<li class="nav-item"><a class="nav-link" href="/user">Users</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
+				
 				</ul>
 				<!-- Links -->
 			</div>
@@ -120,11 +120,11 @@ header {
 	</nav>
 	<!-- Navbar -->
 	<div class="content">
-			<h2 style="margin-top: 0px; padding: 15px; text-align:center;">Dashboard</h2>
-			<div class="charts">
+			<h2 style="margin-top: 0px; padding: 15px; font-size:30px; text-align:center;">Dashboard</h2>
+			<div class="charts" style="margin-left:55px">
 			<div class="row">
 			<div id="chart_div" style="width:870px; height: 600px;"></div>
-			<div id="piechart" style="width:870px; height: 600px;"></div>
+			<div id="piechart" style="width:890px; height: 630px;"></div>
 			</div>
 		</div>
 		<div th:replace="fragments/footer"></div>
@@ -141,25 +141,40 @@ header {
 			google.charts.setOnLoadCallback(drawPieChart);
 		});
 		function drawColumnChart() {
-			var data = new google.visualization.DataTable();
-			data.addColumn('string', 'Theme');
-			data.addColumn('number', 'Count');
-			Object.keys(real_data).forEach(function(theme) {
-				data.addRow([ theme, real_data[theme] ]);
-			});
-			var options = {
-				title : 'Design Data Statistics',
-				hAxis : {
-					title : 'Theme',
-				},
-				vAxis : {
-					title : 'Count'
-				}
-			};
-			var chart = new google.visualization.ColumnChart(document
-					.getElementById('chart_div'));
-			chart.draw(data, options);
+		    var data = new google.visualization.DataTable();
+		    data.addColumn('string', 'Theme');
+		    data.addColumn('number', 'Count');
+		    
+		    // Convert real_data object to an array of arrays for sorting
+		    var dataArray = Object.keys(real_data).map(function(theme) {
+		        return [theme, real_data[theme]];
+		    });
+
+		    // Sort the dataArray by the count (second column)
+		    dataArray.sort(function(a, b) {
+		        return a[1] - b[1]; // Ascending order
+		    });
+
+		    // Add sorted data to DataTable
+		    dataArray.forEach(function(themeData) {
+		        data.addRow(themeData);
+		    });
+
+		    var options = {
+		        title: 'Theme Frequency Chart',
+		        hAxis: {
+		            title: 'Theme',
+		        },
+		        vAxis: {
+		            title: 'Count'
+		        }
+		        
+		    };
+
+		    var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+		    chart.draw(data, options);
 		}
+
 		function drawPieChart() {
 			var data = new google.visualization.DataTable();
 			data.addColumn('string', 'Theme');
@@ -168,7 +183,7 @@ header {
 				data.addRow([ theme, real_data[theme] ]);
 			});
 			var options = {
-				title : 'Design Data Statistics'
+				title : 'Proportion of Themes Generated'
 			};
 			var chart = new google.visualization.PieChart(document
 					.getElementById('piechart'));
