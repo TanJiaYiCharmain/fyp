@@ -62,7 +62,7 @@ public class RestSpringBootController {
 	    // Process the design data to generate graph data
 	    Map<String, Integer> graphData = new TreeMap<>();
 	    for (Object design : designData) {
-	        String theme = ((Map<String, String>) design).get("Theme"); // Get the theme from the design object
+	        String theme = ((Map<String, String>) design).get("theme"); // Get the theme from the design object
 	        graphData.put(theme, graphData.getOrDefault(theme, 0) + 1); // Increment count for the theme
 	    }
 	    

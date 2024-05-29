@@ -37,7 +37,13 @@
 /* Styling for the NFT title */
 .design-title {
 	font-weight: bold;
-	font-size: 16px;
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+
+.design-NoRoom {
+	font-weight: bold;
+	font-size: 14px;
 	margin-bottom: 10px;
 }
 /* Styling for the NFT description */
@@ -253,8 +259,14 @@ fetch('/api/design')
       // Title
       const designTitle = document.createElement('div');
       designTitle.classList.add('design-title');
-      designTitle.textContent = 'Design Title: ' + design.Theme;
+      designTitle.textContent = 'Design Title: ' + design.custom_theme;
       designDetails.appendChild(designTitle);
+      
+  // Number of Room
+      const designRoom = document.createElement('div');
+      designRoom.classList.add('design-NoRoom');
+      designRoom.textContent = 'Number of Room: ' + design.num_room;
+      designDetails.appendChild(designRoom); 
 
       // Description
       const designDescription = document.createElement('div');

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <script src="/bootstrap/js/bootstrap.js"></script>
     <style>
-       header {
+      header {
 	background-color: black;
 	background-size: cover;
 	background-position: center;
@@ -89,31 +89,31 @@ font-size: 30px;
     
 
     <script>
-        function loginFunc(event) {
-            event.preventDefault(); // Prevent form submission
+    function loginFunc(event) {
+        event.preventDefault(); // Prevent form submission
 
-            const username = document.getElementById('user').value;
-            const password = document.getElementById('pwd').value;
+        const username = document.getElementById('user').value;
+        const password = document.getElementById('pwd').value;
 
-            // Fetch user data from the API
-            fetch('/api/user')
-                .then(response => response.json())
-                .then(users => {
-                    // Check if the provided username and password match any user in the database
-                    const foundUser = users.find(user => user.username === username && user.password === password);
+        // Fetch user data from the API
+        fetch('/api/user')
+            .then(response => response.json())
+            .then(users => {
+                // Check if the provided username and password match any user in the database
+                const foundUser = users.find(user => user.email === username && user.encrypted_password === password);
 
-                    if (foundUser) {
-                        // Redirect to dashboard or perform other actions upon successful login
-                        alert('Login successful! Welcome, ' + foundUser.username);
-                    } else {
-                        // Display error message for invalid credentials
-                        document.getElementById('error-msg').textContent = 'Invalid username or password. Please try again.';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching user data:', error);
-                });
-        }
+                if (foundUser) {
+                    // Redirect to dashboard or perform other actions upon successful login
+                    alert('Login successful! Welcome, ' + foundUser.email);
+                } else {
+                    // Display error message for invalid credentials
+                    document.getElementById('error-msg').textContent = 'Invalid email or password. Please try again.';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching user data:', error);
+            });
+    }
     </script>
 </body>
 </html>
