@@ -32,12 +32,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class RestSpringBootController {
-
-	@RequestMapping("/hello")
-	public String hello() {
-		return "Hello world";
-	}
-
+	
 	@GetMapping(value = "/api/user")
 	public List<Object> getUser() {
 		String url = "https://fudsrzbhqpmryvmxgced.supabase.co/rest/v1/users?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ1ZHNyemJocXBtcnl2bXhnY2VkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTM5MjE3OTQsImV4cCI6MjAyOTQ5Nzc5NH0.6UMbzoD8J1BQl01h6NSyZAHVhrWerUcD5VVGuBwRcag";
@@ -74,4 +69,6 @@ public class RestSpringBootController {
 	    modelAndView.addObject("chartData", graphData);
 	    return modelAndView;
 	}
+	
+	
 }

@@ -1,330 +1,387 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Page</title>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
-<!-- Bootstrap JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
-<style>
-/* Styling for the NFT container */
-.design-container {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-	gap: 20px;
-	margin-top: 20px;
-	padding: 30px;
-}
-/* Styling for each NFT card */
-.design-card {
-	background-color: #fff;
-	border-radius: 8px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	overflow: hidden;
-}
-/* Styling for the NFT image */
-.design-image {
-	width: 100%;
-	height: auto;
-	border-bottom: 1px solid #f2f2f2;
-}
-/* Styling for the NFT details */
-.design-details {
-	padding: 20px;
-}
-/* Styling for the NFT title */
-.design-title {
-	font-weight: bold;
-	font-size: 18px;
-	margin-bottom: 10px;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Page</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+  <style>
+    /* Custom CSS styles */
+    .design-container {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr); 
+      gap: 20px;
+      margin-top: 20px;
+      padding: 30px;
+    }
 
-.design-NoRoom {
-	font-weight: bold;
-	font-size: 14px;
-	margin-bottom: 10px;
-}
-/* Styling for the NFT description */
-.design-description {
-	font-size: 14px;
-	color: #666;
-	margin-bottom: 10px;
-	max-height: 100px;
-	/* Limit height to display only part of the description */
-	overflow: hidden;
-}
+    /* Styling for each NFT card */
+    .design-card {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
 
-.show-more {
-	color: #007bff;
-	cursor: pointer;
-}
+    /* Styling for the NFT image */
+    .design-image {
+      width: 100%;
+      height: auto;
+      border-bottom: 1px solid #f2f2f2;
+    }
 
-/* Style for the search bar */
-.search-container {
-	display: flex;
-	justify-content: center;
-	margin-top: 20px;
-}
+    /* Styling for the NFT details */
+    .design-details {
+      padding: 20px;
+    }
 
-.search-input {
-	width: 300px;
-	padding: 10px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	font-size: 16px;
-	outline: none;
-}
+    /* Styling for the NFT title */
+    .design-title {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
 
-.search-button {
-	padding: 10px 20px;
-	margin-left: 10px;
-	background-color: #4CAF50;
-	color: white;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-	font-size: 16px;
-}
+    .design-theme {
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
 
-/* Styles for the footer */
-.footer {
-	
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	background-color: #333;
-	color: #fff;
-	text-align: center;
-	padding: 10px 0;
-}
+    /* Styling for the NFT description */
+    .design-description {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 10px;
+      max-height: 100px; /* Limit height to display only part of the description */
+      overflow: hidden;
+    }
 
-.content {
-	padding: 10px;
-}
+    .show-more {
+      color: #007bff;
+      cursor: pointer;
+    }
 
-.contain{
-	padding:20px;
-}
-header {
-	background-color: black;
-	background-size: cover;
-	background-position: center;
-	padding: 20px;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
+    /* Style for the search bar */
+    .search-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
 
-.nav-links {
-	display: flex;
-	align-items: center;
-}
+    .search-input {
+      width: 300px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      outline: none;
+    }
 
-.nav-links a {
-	color: white;
-	text-decoration: none;
-	margin-left: 25px;
-	font-size: 20px;
-	padding: 20px;
-}
+    .search-button {
+      padding: 10px 20px;
+      margin-left: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
 
-.logo {
-	width: 120px;
-	height: 120px;
-}
+    /* Styles for the footer */
+    .footer {
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 10px 0;
+    }
 
-.logo img {
-	width: 100%;
-	height: 100%;
-	object-fit: contain;
-}
+    .content {
+      padding: 10px;
+    }
 
-.brand {
-	font-size: 50px;
-	font-weight: bold;
-	color: white;
-	margin-left: 10px;
-	font-family: cursive;
-}
-</style>
+    .contain {
+      padding: 20px;
+    }
+
+    header {
+      background-color: black;
+      background-size: cover;
+      background-position: center;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 25px;
+      font-size: 20px;
+      padding: 20px;
+    }
+
+    .logo {
+      width: 100px;
+      height: 100px;
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .brand {
+      font-size: 30px;
+      font-weight: bold;
+      color: white;
+      margin-left: 10px;
+      font-family: cursive;
+    }
+  </style>
 </head>
 <body>
-<div th:replace="fragments/header"></div>
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <!-- Collapse button -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <!-- Links -->
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="/design">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/designData">Dashboard</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/user">Users</a>
-        </li>
+  <!-- Header -->
+  <div th:replace="fragments/header"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <!-- Collapse button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Links -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="/design">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/designData">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/user">Users</a>
+          </li>
+        </ul>
+      </div>
+      <!-- Collapsible content -->
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <div class="content">
+    <div class="contain">
+      <!-- Search bar -->
+      <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search by theme...">
+        <button id="searchButton" class="search-button">Search</button>
+      </div>
+
+      <!-- Search information -->
+      <div id="searchInfo">
+        <p style="font-size: 30px;">
+          Searched: <b><span id="searchInputValue"></span></b>
+        </p>
+      </div>
+
+      <!-- Tab navigation -->
+      <ul class="nav nav-tabs" id="roomTabs" role="tablist">
+        <!-- Tabs will be dynamically generated -->
       </ul>
+
+      <!-- Tab content -->
+      <div class="tab-content" id="roomTabsContent">
+        <!-- Tab panels will be dynamically generated -->
+      </div>
     </div>
-    <!-- Collapsible content -->
   </div>
-</nav>
-<!-- Navbar -->
-<div class="content">
-  <div class="contain">
-    <div class="search-container">
-      <input type="text" id="searchInput" class="search-input"
-        placeholder="Search by theme...">
-      <button id="searchButton" class="search-button">Search</button>
-    </div>
-    <div id="searchInfo">
-      <p style="font-size: 30px;">
-        Searched: <b><span id="searchInputValue"></span></b>
-      </p>
-    </div>
-    <div id="generated-list"></div>
-  </div>
-</div>
-<div th:replace="fragments/footer"></div>
 
-<!-- Bootstrap JS, needs to be at the end of the body -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2024 Your Company. All rights reserved.</p>
+  </footer>
 
-<script>
-function toggleDescription(element) {
-  const description = element.previousSibling;
-  description.classList.toggle('expanded');
-  if (description.classList.contains('expanded')) {
-    element.textContent = 'less...';
-    description.style.maxHeight = 'none'; // Show full description
-  } else {
-    element.textContent = 'more...';
-    description.style.maxHeight = '100px'; // Limit height to show partial description
-  }
-}
+  <!-- Bootstrap JS, needs to be at the end of the body -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
 
-// Function to handle search...
-  
-fetch('/api/design')
-  .then(response => response.json())
-  .then(designs => {
-    // Group designs by number of rooms
-    const groupedDesigns = {};
-    designs.forEach(design => {
-      const numRooms = design.num_room;
-      if (!groupedDesigns[numRooms]) {
-        groupedDesigns[numRooms] = [];
+  <script>
+    function toggleDescription(element) {
+      const description = element.previousSibling;
+      description.classList.toggle('expanded');
+      if (description.classList.contains('expanded')) {
+        element.textContent = 'less...';
+        description.style.maxHeight = 'none'; // Show full description
+      } else {
+        element.textContent = 'more...';
+        description.style.maxHeight = '100px'; // Limit height to show partial description
       }
-      groupedDesigns[numRooms].push(design);
-    });
+    }
 
-    const designListDiv = document.getElementById('generated-list');
-
-    // Populate containers for each group
-    for (const numRooms in groupedDesigns) {
-      if (groupedDesigns.hasOwnProperty(numRooms)) {
-        const designContainer = document.createElement('div');
-        designContainer.classList.add('design-container');
-        designContainer.setAttribute('data-num-rooms', numRooms);
-		
-     // Create label for number of rooms
-        const roomLabel = document.createElement('h4'); // You can use h2, h3, or any other appropriate heading element
-        roomLabel.textContent = `Number of Rooms: ${numRooms}`;
-       designListDiv.appendChild(roomLabel);
-        
-        groupedDesigns[numRooms].forEach(design => {
-          const designCard = document.createElement('div');
-          designCard.classList.add('design-card');
-
-          // Image
-          const designImage = document.createElement('img');
-          designImage.classList.add('design-image');
-          designImage.src = design.image;
-          designImage.alt = 'Design Image';
-          designCard.appendChild(designImage);
-
-          // Details
-          const designDetails = document.createElement('div');
-          designDetails.classList.add('design-details');
-
-          // Title
-          const designTitle = document.createElement('div');
-          designTitle.classList.add('design-title');
-          designTitle.textContent = 'Design Title: ' + design.custom_theme;
-          designDetails.appendChild(designTitle);
-          
-          // Number of Room
-          const designRoom = document.createElement('div');
-          designRoom.classList.add('design-NoRoom');
-          designRoom.textContent = 'Number of Room: ' + design.num_room;
-          designDetails.appendChild(designRoom); 
-
-          // Description
-          const designDescription = document.createElement('div');
-          designDescription.classList.add('design-description');
-          designDescription.textContent = 'Design Description: ' + design.prompt;
-          designDetails.appendChild(designDescription);
-
-          // Show more/less link
-          const showMoreLink = document.createElement('span');
-          showMoreLink.classList.add('show-more');
-          showMoreLink.textContent = 'more...';
-          showMoreLink.addEventListener('click', () => toggleDescription(showMoreLink));
-          designDetails.appendChild(showMoreLink);
-
-          designCard.appendChild(designDetails);
-          designContainer.appendChild(designCard);
+    // Function to fetch and populate designs
+    fetch('/api/design')
+      .then(response => response.json())
+      .then(designs => {
+        // Group designs by number of rooms
+        const groupedDesigns = {};
+        designs.forEach(design => {
+          const numRooms = design.num_room;
+          if (!groupedDesigns[numRooms]) {
+            groupedDesigns[numRooms] = [];
+          }
+          groupedDesigns[numRooms].push(design);
         });
 
-        designListDiv.appendChild(designContainer);
+        const tabNav = document.getElementById('roomTabs');
+        const tabContent = document.getElementById('roomTabsContent');
+
+        // Populate tabs and tab content
+        for (const numRooms in groupedDesigns) {
+          if (groupedDesigns.hasOwnProperty(numRooms)) {
+            // Tab nav item
+            const tabNavItem = document.createElement('li');
+            tabNavItem.classList.add('nav-item');
+
+            const tabLink = document.createElement('a');
+            tabLink.classList.add('nav-link');
+            tabLink.setAttribute('id', `room-tab-${numRooms}`);
+            tabLink.setAttribute('data-toggle', 'tab');
+            tabLink.setAttribute('href', `#room-${numRooms}`);
+            tabLink.setAttribute('role', 'tab');
+            tabLink.setAttribute('aria-controls', `room-${numRooms}`);
+            tabLink.setAttribute('aria-selected', 'false');
+            tabLink.textContent = `Room ${numRooms}`;
+
+            tabNavItem.appendChild(tabLink);
+            tabNav.appendChild(tabNavItem);
+
+            // Tab content item
+            const tabPane = document.createElement('div');
+            tabPane.classList.add('tab-pane', 'fade');
+            tabPane.setAttribute('id', `room-${numRooms}`);
+            tabPane.setAttribute('role', 'tabpanel');
+            tabPane.setAttribute('aria-labelledby', `room-tab-${numRooms}`);
+
+            const designContainer = document.createElement('div');
+            designContainer.classList.add('design-container');
+
+            groupedDesigns[numRooms].forEach(design => {
+              const designCard = document.createElement('div');
+              designCard.classList.add('design-card');
+
+              // Image
+              const designImage = document.createElement('img');
+              designImage.classList.add('design-image');
+              designImage.src = design.image;
+              designImage.alt = 'Design Image';
+              designCard.appendChild(designImage);
+
+              // Details
+              const designDetails = document.createElement('div');
+              designDetails.classList.add('design-details');
+
+              // Title
+              const designTitle = document.createElement('div');
+              designTitle.classList.add('design-title');
+              designTitle.textContent = 'Design Title: ' + design.custom_theme;
+              designDetails.appendChild(designTitle);
+
+              // Theme
+              const designTheme = document.createElement('div');
+              designTheme.classList.add('design-theme');
+              designTheme.textContent = 'Theme: ' + design.theme;
+              designDetails.appendChild(designTheme);
+
+              // Description
+              const designDescription = document.createElement('div');
+              designDescription.classList.add('design-description');
+              designDescription.textContent = 'Design Description: ' + design.prompt;
+              designDetails.appendChild(designDescription);
+
+              // Show more/less link
+              const showMoreLink = document.createElement('span');
+              showMoreLink.classList.add('show-more');
+              showMoreLink.textContent = 'more...';
+              showMoreLink.addEventListener('click', () => toggleDescription(showMoreLink));
+              designDetails.appendChild(showMoreLink);
+
+              designCard.appendChild(designDetails);
+              designContainer.appendChild(designCard);
+            });
+
+            tabPane.appendChild(designContainer);
+            tabContent.appendChild(tabPane);
+            
+         // Set the first tab as active by default
+            if (numRooms === '1') {
+              tabNavItem.classList.add('active');
+              tabPane.classList.add('active', 'show'); // Add 'active' and 'show' classes to the first tab pane
+            }
+
+          }
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching Design data:', error);
+      });
+    
+    // Handle tab click events to update active state
+    $('#roomTabs a').on('click', function (e) {
+      e.preventDefault();
+      $(this).tab('show');
+    });
+
+    // Set the first tab to be active when the page loads
+    $(document).ready(function () {
+      $('#roomTabs a:first').tab('show');
+    });
+	
+    // Function to handle search
+    function handleSearch() {
+      const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
+      const designCards = document.querySelectorAll('.design-card');
+      let themesFound = false; // Variable to track if any themes are found
+      let themes = [];
+
+      designCards.forEach(card => {
+        const theme = card.querySelector('.design-title').textContent.toLowerCase();
+        if (theme.includes(searchInput)) {
+          card.style.display = 'block'; // Show the card if theme matches search input
+          themes.push(theme); // Add matched theme to array
+        } else {
+          card.style.display = 'none'; // Hide the card if theme doesn't match search input
+        }
+      });
+
+      const searchInputValue = document.getElementById('searchInputValue');
+      searchInputValue.textContent = `${searchInput}`;
+
+      // Optional: Display message if no results found
+      if (themes.length === 0) {
+        tabContent.innerHTML = '<p>No designs found.</p>';
       }
     }
-  })
-  .catch(error => {
-    console.error('Error fetching Design data:', error);
-  });
 
-// Function to handle search
-function handleSearch() {
-  const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
-  const designCards = document.querySelectorAll('.design-card');
-  let themesFound = false; // Variable to track if any themes are found
-  let themes = [];
+    // Event listener for search button click
+    document.getElementById('searchButton').addEventListener('click', handleSearch);
 
-  designCards.forEach(card => {
-    const theme = card.querySelector('.design-title').textContent.toLowerCase();
-    if (theme.includes(searchInput)) {
-      card.style.display = 'block'; // Show the card if theme matches search input
-      themes.push(theme); // Add matched theme to array
-    } else {
-      card.style.display = 'none'; // Hide the card if theme doesn't match search input
-
-    }
-  });
-
-
-  const searchInputValue = document.getElementById('searchInputValue');
-  searchInputValue.textContent = `${searchInput}`;
-
- 
-}
-
-// Event listener for search button click
-document.getElementById('searchButton').addEventListener('click', handleSearch);
-
-// Event listener for input field change
-document.getElementById('searchInput').addEventListener('input', handleSearch);
-
-</script>
+    // Event listener for input field change
+    document.getElementById('searchInput').addEventListener('input', handleSearch);
+  </script>
 </body>
 </html>

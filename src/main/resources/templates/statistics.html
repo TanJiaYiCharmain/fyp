@@ -1,4 +1,3 @@
-
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -47,8 +46,8 @@ header {
 }
 
 .logo {
-	width: 120px;
-	height: 120px;
+	width: 100px;
+	height: 100px;
 }
 
 .logo img {
@@ -58,13 +57,12 @@ header {
 }
 
 .brand {
-	font-size: 50px;
+	font-size: 30px;
 	font-weight: bold;
 	color: white;
 	margin-left: 10px;
 	font-family: cursive;
 }
-
 
 /* Styles for the footer */
 .footer {
@@ -75,13 +73,7 @@ header {
 	color: #fff;
 	text-align: center;
 	padding: 10px 0;
-	font-size:16px;	
-}
-
-.charts{
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+	font-size: 16px;
 }
 
 
@@ -101,16 +93,17 @@ header {
 			</button>
 
 			<!-- Collapsible content -->
-			<div class="collapse navbar-collapse" id="navbarSupportedContent" style="font-size: 16px; ">
+			<div class="collapse navbar-collapse" id="navbarSupportedContent"
+				style="font-size: 16px;">
 
 				<!-- Links -->
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0" 	>
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item"><a class="nav-link" href="/design">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="/designData">Dashboard</a>
 					</li>
 					<li class="nav-item"><a class="nav-link" href="/user">Users</a>
 					</li>
-				
+
 				</ul>
 				<!-- Links -->
 			</div>
@@ -120,11 +113,16 @@ header {
 	</nav>
 	<!-- Navbar -->
 	<div class="content">
-			<h2 style="margin-top: 0px; padding: 15px; font-size:30px; text-align:center;">Dashboard</h2>
-			<div class="charts" style="margin-left:55px">
+		<h2
+			style="margin-top: 0px; padding: 15px; font-size: 30px; text-align: center;">Dashboard</h2>
+		<div class="container-fluid">
 			<div class="row">
-			<div id="chart_div" style="width:870px; height: 600px;"></div>
-			<div id="piechart" style="width:890px; height: 630px;"></div>
+				<div class="col">
+					<div id="chart_div"  style="height: 600px;"></div>
+				</div>
+				<div class="col">
+					<div id="piechart"  style="height: 600px;"></div>
+				</div>
 			</div>
 		</div>
 		<div th:replace="fragments/footer"></div>
@@ -141,38 +139,39 @@ header {
 			google.charts.setOnLoadCallback(drawPieChart);
 		});
 		function drawColumnChart() {
-		    var data = new google.visualization.DataTable();
-		    data.addColumn('string', 'Theme');
-		    data.addColumn('number', 'Count');
-		    
-		    // Convert real_data object to an array of arrays for sorting
-		    var dataArray = Object.keys(real_data).map(function(theme) {
-		        return [theme, real_data[theme]];
-		    });
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'Theme');
+			data.addColumn('number', 'Count');
 
-		    // Sort the dataArray by the count (second column)
-		    dataArray.sort(function(a, b) {
-		        return a[1] - b[1]; // Ascending order
-		    });
+			// Convert real_data object to an array of arrays for sorting
+			var dataArray = Object.keys(real_data).map(function(theme) {
+				return [ theme, real_data[theme] ];
+			});
 
-		    // Add sorted data to DataTable
-		    dataArray.forEach(function(themeData) {
-		        data.addRow(themeData);
-		    });
+			// Sort the dataArray by the count (second column)
+			dataArray.sort(function(a, b) {
+				return a[1] - b[1]; // Ascending order
+			});
 
-		    var options = {
-		        title: 'Theme Frequency Chart',
-		        hAxis: {
-		            title: 'Theme',
-		        },
-		        vAxis: {
-		            title: 'Count'
-		        }
-		        
-		    };
+			// Add sorted data to DataTable
+			dataArray.forEach(function(themeData) {
+				data.addRow(themeData);
+			});
 
-		    var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-		    chart.draw(data, options);
+			var options = {
+				title : 'Theme Frequency Chart',
+				hAxis : {
+					title : 'Theme',
+				},
+				vAxis : {
+					title : 'Count'
+				}
+
+			};
+
+			var chart = new google.visualization.ColumnChart(document
+					.getElementById('chart_div'));
+			chart.draw(data, options);
 		}
 
 		function drawPieChart() {
@@ -189,6 +188,8 @@ header {
 					.getElementById('piechart'));
 			chart.draw(data, options);
 		}
+		
+		
 	</script>
 </body>
 
