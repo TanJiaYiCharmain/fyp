@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>ReVibe Dashboard</title>
+<title>ReVibe User Dashboard</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet"
@@ -75,8 +75,6 @@ header {
 	padding: 10px 0;
 	font-size: 16px;
 }
-
-
 </style>
 </head>
 <body>
@@ -114,8 +112,9 @@ header {
 	<!-- Navbar -->
 	<div class="content">
 		<h2
-			style="margin-top: 0px; padding: 15px; font-size: 30px; text-align: center;">Design Dashboard</h2>
-			<div class="container-fluid">
+			style="margin-top: 0px; padding: 15px; font-size: 30px; text-align: center;">User Dashboard</h2>
+
+		<div class="container-fluid">
 			<div class="row justify-content-center">
 				<div class="col-auto">
 					<a class="nav-link active" href="/designData" style="font-size: 15px;">Design</a>
@@ -125,123 +124,63 @@ header {
 				</div>
 			</div>
 		</div>
+		
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col">
-					<div id="chart_div"  style="height: 600px;"></div>
-				</div>
-				<div class="col">
-					<div id="piechart"  style="height: 600px;"></div>
+					<div id="linechart" style="height: 600px;"></div>
 				</div>
 			</div>
-			<div class="row">
-                <div class="col">
-                    <div id="linechart" style="height: 600px;"></div>
-                </div>
-            </div>
 		</div>
 		<div th:replace="fragments/footer"></div>
 
 	</div>
 
 	<script th:inline="javascript">
-		var real_data = /*[[${chartData}]]*/'noValue';
-		var lineChartData = /*[[${lineChartData}]]*/ 'noValue';
+		var lineChartData = /*[[${lineChartData}]]*/'noValue';
 		$(document).ready(function() {
 			google.charts.load('current', {
 				packages : [ 'corechart', 'bar' ]
 			});
-			google.charts.setOnLoadCallback(drawColumnChart);
-			google.charts.setOnLoadCallback(drawPieChart);
 			google.charts.setOnLoadCallback(drawLineChart);
 		});
-		function drawColumnChart() {
+
+		function drawLineChart() {
 			var data = new google.visualization.DataTable();
-			data.addColumn('string', 'Theme');
+			data.addColumn('string', 'Month');
 			data.addColumn('number', 'Count');
 
-			// Convert real_data object to an array of arrays for sorting
-			var dataArray = Object.keys(real_data).map(function(theme) {
-				return [ theme, real_data[theme] ];
+			// Convert lineChartData object to an array of arrays for sorting
+			var dataArray = Object.keys(lineChartData).map(function(monthYear) {
+				return [ monthYear, lineChartData[monthYear] ];
 			});
 
-			// Sort the dataArray by the count (second column)
+			// Sort the dataArray by month and year
 			dataArray.sort(function(a, b) {
-				return a[1] - b[1]; // Ascending order
+				var dateA = new Date(a[0]);
+				var dateB = new Date(b[0]);
+				return dateA - dateB; // Ascending order
 			});
 
 			// Add sorted data to DataTable
-			dataArray.forEach(function(themeData) {
-				data.addRow(themeData);
+			dataArray.forEach(function(monthYearData) {
+				data.addRow(monthYearData);
 			});
 
 			var options = {
-				title : 'Theme Frequency Chart',
+				title : 'New Users Over Current Year',
 				hAxis : {
-					title : 'Theme',
+					title : 'Month',
 				},
 				vAxis : {
 					title : 'Count'
 				}
-
 			};
 
-			var chart = new google.visualization.ColumnChart(document
-					.getElementById('chart_div'));
+			var chart = new google.visualization.LineChart(document
+					.getElementById('linechart'));
 			chart.draw(data, options);
 		}
-
-		function drawPieChart() {
-			var data = new google.visualization.DataTable();
-			data.addColumn('string', 'Theme');
-			data.addColumn('number', 'Count');
-			Object.keys(real_data).forEach(function(theme) {
-				data.addRow([ theme, real_data[theme] ]);
-			});
-			var options = {
-				title : 'Proportion of Themes Generated'
-			};
-			var chart = new google.visualization.PieChart(document
-					.getElementById('piechart'));
-			chart.draw(data, options);
-		}
-		
-		  function drawLineChart() {
-	            var data = new google.visualization.DataTable();
-	            data.addColumn('string', 'Month');
-	            data.addColumn('number', 'Count');
-
-	            // Convert lineChartData object to an array of arrays for sorting
-	            var dataArray = Object.keys(lineChartData).map(function(monthYear) {
-	                return [ monthYear, lineChartData[monthYear] ];
-	            });
-
-	            // Sort the dataArray by month and year
-	            dataArray.sort(function(a, b) {
-	                var dateA = new Date(a[0]);
-	                var dateB = new Date(b[0]);
-	                return dateA - dateB; // Ascending order
-	            });
-
-	            // Add sorted data to DataTable
-	            dataArray.forEach(function(monthYearData) {
-	                data.addRow(monthYearData);
-	            });
-
-	            var options = {
-	                title : 'Images Generated Over Current Year',
-	                hAxis : {
-	                    title : 'Month',
-	                },
-	                vAxis : {
-	                    title : 'Count'
-	                }
-	            };
-
-	            var chart = new google.visualization.LineChart(document.getElementById('linechart'));
-	            chart.draw(data, options);
-	        }
-		
 	</script>
 </body>
 

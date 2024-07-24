@@ -13,24 +13,14 @@ public class UserController {
     public String getUserPage() {
         return "user_data"; 
     }
-    @GetMapping("/design")
-    public String getDesignPage() {
-        return "design"; 
-    }
     @GetMapping("/")
-    public String loginPage() {
+    public String getDesignPage() {
         return "index"; 
     }
     
     @GetMapping("/hello")
 	public String hello(Model model) {
-		
 		return "hello";
-
 	}
-    
-    
-    
-    
    
 }
