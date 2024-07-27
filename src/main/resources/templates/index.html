@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -212,9 +212,7 @@
   </div>
 
   <!-- Footer -->
-  <footer class="footer">
-    <p>&copy; 2024 Your Company. All rights reserved.</p>
-  </footer>
+  <div th:replace="fragments/footer"></div>
 
   <!-- Bootstrap JS, needs to be at the end of the body -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

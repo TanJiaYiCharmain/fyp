@@ -1,21 +1,21 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeLeaf.org">
 <head>
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>User Data</title>
 <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 <script src="/bootstrap/css/bootstrap.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
 <style>
 /* Styling for the user data table */
 .user-table {
 	width: 60%;
 	border-collapse: collapse;
 	margin-top: 20px;
-	margin-left:20%;
+	margin-left: 20%;
 }
 
 .user-table th, .user-table td {
@@ -35,6 +35,7 @@
 .user-table tr:hover {
 	background-color: #e9e9e9;
 }
+
 /* Header */
 header {
 	background-color: black;
@@ -71,7 +72,7 @@ header {
 }
 
 .brand {
-	font-size:30px;
+	font-size: 30px;
 	font-weight: bold;
 	color: white;
 	margin-left: 10px;
@@ -79,9 +80,8 @@ header {
 }
 
 /* End of Header */
-
 .footer {
-	margin-top:5%;
+	margin-top: 5%;
 	bottom: 0;
 	left: 0;
 	width: 100%;
@@ -89,6 +89,48 @@ header {
 	color: #fff;
 	text-align: center;
 	padding: 10px 0;
+}
+
+/* Style for the search bar */
+.search-container {
+	display: flex;
+	justify-content: center;
+	align-items: center; /* Align items vertically */
+	margin-top: 20px;
+}
+
+.search-input {
+	width: 300px;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 16px;
+	outline: none;
+}
+
+.search-button {
+	padding: 10px 20px;
+	margin-left: 10px;
+	background-color: #4CAF50;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.search-select {
+	padding: 10px;
+	margin-left: 10px; /* Add space between label and select */
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 16px;
+	outline: none;
+}
+
+.search-label {
+	margin-right: 10px;
+	font-size: 16px;
 }
 </style>
 </head>
@@ -98,71 +140,89 @@ header {
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
 			<!-- Collapse button -->
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-
 			<!-- Collapsible content -->
-			<div class="collapse navbar-collapse" id="navbarSupportedContent"
-				style="font-size: 16px;">
-
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<!-- Links -->
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="/designData">Dashboard</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="/user">Users</a>
-					</li>
-					
+					<li class="nav-item"><a class="nav-link" href="/designData">Dashboard</a></li>
+					<li class="nav-item"><a class="nav-link" href="/user">Users</a></li>
 				</ul>
-				<!-- Links -->
 			</div>
 			<!-- Collapsible content -->
 		</div>
 	</nav>
 	<!-- Navbar -->
-	<h1 style="text-align:center;padding: 10px;margin-top:20px">User Data</h1>
-	<div style="height:700px; padding: 30px;"id="user-list"></div>
+	<h1 style="text-align: center; padding: 10px; margin-top: 20px">User Data</h1>
+	<div class="search-container">
+		<label for="searchCriteria" class="search-label">Search By:</label>
+		<select id="searchCriteria" class="search-select">
+			<option value="username">Username</option>
+			<option value="email">Email</option>
+		</select>
+		<input type="text" id="searchInput" class="search-input" placeholder="Search for users...">
+	</div>
+	<div style="height: 545px; padding: 30px;" id="user-list"></div>
 	<div th:replace="fragments/footer"></div>
+	<!-- Bootstrap JS, needs to be at the end of the body -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
 	<script>
-	fetch('/api/user')
-    .then(response => response.json())
-    .then(users => {
-        const userListDiv = document.getElementById('user-list');
+		fetch('/api/user')
+			.then(response => response.json())
+			.then(users => {
+				const userListDiv = document.getElementById('user-list');
 
-        const table = document.createElement('table');
-        table.classList.add('user-table');
+				const table = document.createElement('table');
+				table.classList.add('user-table');
 
-        const headers = ['Username', 'Email'];
-        const headerRow = document.createElement('tr');
-        headers.forEach(headerText => {
-            const th = document.createElement('th');
-            th.textContent = headerText;
-            headerRow.appendChild(th);
-        });
-        table.appendChild(headerRow);
+				const headers = ['Username', 'Email'];
+				const headerRow = document.createElement('tr');
+				headers.forEach(headerText => {
+					const th = document.createElement('th');
+					th.textContent = headerText;
+					headerRow.appendChild(th);
+				});
+				table.appendChild(headerRow);
 
-        // Filter out users with the role "User"
-        const filteredUsers = users.filter(user => user.roles === 'User');
+				// Filter out users with the role "User"
+				const filteredUsers = users.filter(user => user.roles === 'User');
 
-        filteredUsers.forEach(user => {
-            const row = document.createElement('tr');
-            ['username', 'email'].forEach(key => {
-                const cell = document.createElement('td');
-                cell.textContent = user[key];
-                row.appendChild(cell);
-            });
-            table.appendChild(row);
-        });
+				filteredUsers.forEach(user => {
+					const row = document.createElement('tr');
+					['username', 'email'].forEach(key => {
+						const cell = document.createElement('td');
+						cell.textContent = user[key];
+						row.appendChild(cell);
+					});
+					table.appendChild(row);
+				});
 
-        userListDiv.appendChild(table);
-    })
-    .catch(error => {
-        console.error('Error fetching user data:', error);
-    });
-    </script>
+				userListDiv.appendChild(table);
+
+				const searchInput = document.getElementById('searchInput');
+				const searchCriteria = document.getElementById('searchCriteria');
+				searchInput.addEventListener('input', function () {
+					const filter = searchInput.value.toLowerCase();
+					const criteria = searchCriteria.value;
+					const rows = table.getElementsByTagName('tr');
+					for (let i = 1; i < rows.length; i++) {
+						const cell = rows[i].querySelector(`td:nth-child(${criteria === 'username' ? 1 : 2})`);
+						if (cell.textContent.toLowerCase().includes(filter)) {
+							rows[i].style.display = '';
+						} else {
+							rows[i].style.display = 'none';
+						}
+					}
+				});
+			})
+			.catch(error => {
+				console.error('Error fetching user data:', error);
+			});
+	</script>
 </body>
 </html>

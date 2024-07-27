@@ -1,248 +1,237 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<title>ReVibe Dashboard</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="/bootstrap/css/bootstrap.js"></script>
-<script type="text/javascript"
-	src="https://www.gstatic.com/charts/loader.js"></script>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
-<!-- Bootstrap JavaScript -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
-<!-- Bootstrap JS, needs to be at the end of the body -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
-<style>
-header {
-	background-color: black;
-	background-size: cover;
-	background-position: center;
-	padding: 20px;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReVibe Dashboard</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-.nav-links {
-	display: flex;
-	align-items: center;
-}
+    <style>
+        header {
+            background-color: black;
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-.nav-links a {
-	color: white;
-	text-decoration: none;
-	margin-left: 25px;
-	font-size: 20px;
-	padding: 20px;
-}
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
 
-.logo {
-	width: 100px;
-	height: 100px;
-}
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 20px;
+            padding: 20px;
+        }
 
-.logo img {
-	width: 100%;
-	height: 100%;
-	object-fit: contain;
-}
+        .logo {
+            width: 100px;
+            height: 100px;
+        }
 
-.brand {
-	font-size: 30px;
-	font-weight: bold;
-	color: white;
-	margin-left: 10px;
-	font-family: cursive;
-}
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
 
-/* Styles for the footer */
-.footer {
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	background-color: #333;
-	color: #fff;
-	text-align: center;
-	padding: 10px 0;
-	font-size: 16px;
-}
+        .brand {
+            font-size: 30px;
+            font-weight: bold;
+            color: white;
+            margin-left: 10px;
+            font-family: cursive;
+        }
 
-
-</style>
+        /* Styles for the footer */
+        .footer {
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
-	<div th:replace="fragments/header"></div>
-	<!-- Navbar -->
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<div class="container-fluid">
-			<!-- Collapse button -->
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-
-			<!-- Collapsible content -->
-			<div class="collapse navbar-collapse" id="navbarSupportedContent"
-				style="font-size: 16px;">
-
-				<!-- Links -->
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="/designData">Dashboard</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="/user">Users</a>
-					</li>
-
-				</ul>
-				<!-- Links -->
-			</div>
-			<!-- Collapsible content -->
-
-		</div>
-	</nav>
-	<!-- Navbar -->
-	<div class="content">
-		<h2
-			style="margin-top: 0px; padding: 15px; font-size: 30px; text-align: center;">Design Dashboard</h2>
-			<div class="container-fluid">
-			<div class="row justify-content-center">
-				<div class="col-auto">
-					<a class="nav-link active" href="/designData" style="font-size: 15px;">Design</a>
-				</div>
-				<div class="col-auto">
-					<a class="nav-link" href="/userData" style="font-size: 15px;">User</a>
-				</div>
-			</div>
-		</div>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col">
-					<div id="chart_div"  style="height: 600px;"></div>
-				</div>
-				<div class="col">
-					<div id="piechart"  style="height: 600px;"></div>
-				</div>
-			</div>
-			<div class="row">
-                <div class="col">
-                    <div id="linechart" style="height: 600px;"></div>
+    <!-- Header -->
+    <div th:replace="fragments/header"></div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <!-- Collapse button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Collapsible content -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Links -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-left:20px;">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/designData">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user">Users</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Collapsible content -->
+        </div>
+    </nav>
+    <!-- Navbar -->
+    <div class="content">
+        <h2 style="margin-top: 0px; padding: 15px; font-size: 30px; text-align: center;">Design Dashboard</h2>
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <a class="nav-link active" href="/designData" style="font-size: 15px;">Design</a>
+                </div>
+                <div class="col-auto">
+                    <a class="nav-link" href="/userData" style="font-size: 15px;">User</a>
                 </div>
             </div>
-		</div>
-		<div th:replace="fragments/footer"></div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="chart_div" style="width: 100%; height: 600px;"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="piechart" style="width: 100%; height: 600px;"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div id="linechart" style="width: 100%; height: 600px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	</div>
+    <div th:replace="fragments/footer"></div>
+    <!-- Bootstrap JS, needs to be at the end of the body -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-	<script th:inline="javascript">
-		var real_data = /*[[${chartData}]]*/'noValue';
-		var lineChartData = /*[[${lineChartData}]]*/ 'noValue';
-		$(document).ready(function() {
-			google.charts.load('current', {
-				packages : [ 'corechart', 'bar' ]
-			});
-			google.charts.setOnLoadCallback(drawColumnChart);
-			google.charts.setOnLoadCallback(drawPieChart);
-			google.charts.setOnLoadCallback(drawLineChart);
-		});
-		function drawColumnChart() {
-			var data = new google.visualization.DataTable();
-			data.addColumn('string', 'Theme');
-			data.addColumn('number', 'Count');
+    <script th:inline="javascript">
+        var real_data = /*[[${chartData}]]*/'noValue';
+        var lineChartData = /*[[${lineChartData}]]*/'noValue';
 
-			// Convert real_data object to an array of arrays for sorting
-			var dataArray = Object.keys(real_data).map(function(theme) {
-				return [ theme, real_data[theme] ];
-			});
+        function drawColumnChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Theme');
+            data.addColumn('number', 'Count');
 
-			// Sort the dataArray by the count (second column)
-			dataArray.sort(function(a, b) {
-				return a[1] - b[1]; // Ascending order
-			});
+            // Convert real_data object to an array of arrays for sorting
+            var dataArray = Object.keys(real_data).map(function(theme) {
+                return [theme, real_data[theme]];
+            });
 
-			// Add sorted data to DataTable
-			dataArray.forEach(function(themeData) {
-				data.addRow(themeData);
-			});
+            // Sort the dataArray by the count (second column)
+            dataArray.sort(function(a, b) {
+                return a[1] - b[1]; // Ascending order
+            });
 
-			var options = {
-				title : 'Theme Frequency Chart',
-				hAxis : {
-					title : 'Theme',
-				},
-				vAxis : {
-					title : 'Count'
-				}
+            // Add sorted data to DataTable
+            dataArray.forEach(function(themeData) {
+                data.addRow(themeData);
+            });
 
-			};
+            var options = {
+                title: 'Theme Frequency Chart',
+                hAxis: {
+                    title: 'Theme',
+                },
+                vAxis: {
+                    title: 'Count'
+                },
+                width: '100%'
+            };
 
-			var chart = new google.visualization.ColumnChart(document
-					.getElementById('chart_div'));
-			chart.draw(data, options);
-		}
+            var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
 
-		function drawPieChart() {
-			var data = new google.visualization.DataTable();
-			data.addColumn('string', 'Theme');
-			data.addColumn('number', 'Count');
-			Object.keys(real_data).forEach(function(theme) {
-				data.addRow([ theme, real_data[theme] ]);
-			});
-			var options = {
-				title : 'Proportion of Themes Generated'
-			};
-			var chart = new google.visualization.PieChart(document
-					.getElementById('piechart'));
-			chart.draw(data, options);
-		}
-		
-		  function drawLineChart() {
-	            var data = new google.visualization.DataTable();
-	            data.addColumn('string', 'Month');
-	            data.addColumn('number', 'Count');
+        function drawPieChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Theme');
+            data.addColumn('number', 'Count');
+            Object.keys(real_data).forEach(function(theme) {
+                data.addRow([theme, real_data[theme]]);
+            });
+            var options = {
+                title: 'Proportion of Themes Generated',
+                width: '100%'
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(data, options);
+        }
 
-	            // Convert lineChartData object to an array of arrays for sorting
-	            var dataArray = Object.keys(lineChartData).map(function(monthYear) {
-	                return [ monthYear, lineChartData[monthYear] ];
-	            });
+        function drawLineChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Month');
+            data.addColumn('number', 'Count');
 
-	            // Sort the dataArray by month and year
-	            dataArray.sort(function(a, b) {
-	                var dateA = new Date(a[0]);
-	                var dateB = new Date(b[0]);
-	                return dateA - dateB; // Ascending order
-	            });
+            // Convert lineChartData object to an array of arrays for sorting
+            var dataArray = Object.keys(lineChartData).map(function(monthYear) {
+                return [monthYear, lineChartData[monthYear]];
+            });
 
-	            // Add sorted data to DataTable
-	            dataArray.forEach(function(monthYearData) {
-	                data.addRow(monthYearData);
-	            });
+            // Sort the dataArray by month and year
+            dataArray.sort(function(a, b) {
+                var dateA = new Date(a[0]);
+                var dateB = new Date(b[0]);
+                return dateA - dateB; // Ascending order
+            });
 
-	            var options = {
-	                title : 'Images Generated Over Current Year',
-	                hAxis : {
-	                    title : 'Month',
-	                },
-	                vAxis : {
-	                    title : 'Count'
-	                }
-	            };
+            // Add sorted data to DataTable
+            dataArray.forEach(function(monthYearData) {
+                data.addRow(monthYearData);
+            });
 
-	            var chart = new google.visualization.LineChart(document.getElementById('linechart'));
-	            chart.draw(data, options);
-	        }
-		
-	</script>
+            var options = {
+                title: 'Images Generated Over Current Year',
+                hAxis: {
+                    title: 'Month',
+                },
+                vAxis: {
+                    title: 'Count'
+                },
+                width: '100%'
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('linechart'));
+            chart.draw(data, options);
+        }
+
+        $(document).ready(function() {
+            google.charts.load('current', {
+                packages: ['corechart', 'bar']
+            });
+            google.charts.setOnLoadCallback(drawColumnChart);
+            google.charts.setOnLoadCallback(drawPieChart);
+            google.charts.setOnLoadCallback(drawLineChart);
+
+            $(window).resize(function() {
+                drawColumnChart();
+                drawPieChart();
+                drawLineChart();
+            });
+        });
+    </script>
 </body>
-
 </html>
+font-s</headts/hea
